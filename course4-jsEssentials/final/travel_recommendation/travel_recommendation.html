@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoyageVista - Discover Your Next Adventure</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #19454B;
+            --secondary-color: #2A6A75;
+            --accent-color: #3A8A95;
+            --light-accent: #4AAAB5;
+            --text-dark: #1A1A1A;
+            --text-light: #FFFFFF;
+            --bg-light: #F7F9FA;
+            --bg-card: #FFFFFF;
+            --shadow: 0 4px 6px rgba(25, 69, 75, 0.1);
+            --shadow-hover: 0 8px 15px rgba(25, 69, 75, 0.2);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            color: var(--light-accent);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--light-accent);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem;
+            border-radius: 50px;
+        }
+
+        #searchInput {
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: 25px;
+            width: 250px;
+            background-color: rgba(255, 255, 255, 0.9);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        #searchInput:focus {
+            outline: none;
+            background-color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .btn {
+            padding: 0.6rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .btn-search {
+            background-color: var(--light-accent);
+            color: white;
+        }
+
+        .btn-search:hover {
+            background-color: #5BBBC5;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-clear {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .btn-clear:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .main-content {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        #homePage {
+            position: relative;
+            height: calc(100vh - 80px);
+            background: linear-gradient(rgba(25, 69, 75, 0.7), rgba(42, 106, 117, 0.7)),
+                url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1600&q=80') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background-color: var(--light-accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .cta-button:hover {
+            background-color: #5BBBC5;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .social-icons {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .social-icons a {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .social-icons a:hover {
+            background-color: var(--light-accent);
+            transform: translateY(-3px);
+            border-color: var(--light-accent);
+        }
+
+        #aboutPage,
+        #contactPage {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: none;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .company-info {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .company-info h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .company-info p {
+            color: var(--text-dark);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .team-section h2 {
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-member {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .member-avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .team-member h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .team-member .role {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .team-member p {
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .contact-form-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #E0E0E0;
+            border-radius: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(42, 106, 117, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        #searchResults {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: none;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .results-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .result-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .result-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .result-content {
+            padding: 1.5rem;
+        }
+
+        .result-content h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .result-content p {
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .time-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .time-info i {
+            color: var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .search-container {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            #searchInput {
+                width: 100%;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="showPage('home')">
+                <i class="fas fa-compass"></i>
+                VoyageVista
+            </a>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showPage('home')">Home</a></li>
+                <li><a href="#" onclick="showPage('about')">About Us</a></li>
+                <li><a href="#" onclick="showPage('contact')">Contact Us</a></li>
+                <li class="search-container" id="searchContainer">
+                    <input type="text" id="searchInput" placeholder="Search destinations...">
+                    <button class="btn btn-search" onclick="searchRecommendations()">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                    <button class="btn btn-clear" onclick="clearResults()">
+                        <i class="fas fa-times"></i> Clear
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div id="homePage">
+            <div class="hero-content">
+                <h1>Discover Your Next Adventure</h1>
+                <p>Explore breathtaking destinations, immerse yourself in diverse cultures, and create unforgettable
+                    memories with VoyageVista - your trusted travel companion.</p>
+                <a href="#" class="cta-button" onclick="showPage('about')">Book Now</a>
+            </div>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+
+        <div id="aboutPage">
+            <div class="page-header">
+                <h1>About VoyageVista</h1>
+                <p>Your Gateway to Extraordinary Travel Experiences</p>
+            </div>
+
+            <div class="about-content">
+                <div class="company-info">
+                    <h2>Our Story</h2>
+                    <p>Founded in 2015, VoyageVista emerged from a simple belief: travel should be transformative,
+                        accessible, and unforgettable. We started as a small team of passionate travelers who wanted to
+                        share the world's hidden gems with fellow adventurers.</p>
+                    <p>Today, we've grown into a trusted platform serving millions of travelers worldwide. Our mission
+                        remains unchanged - to inspire and enable meaningful travel experiences that connect people with
+                        destinations, cultures, and each other.</p>
+                    <p>We curate exceptional destinations, from pristine beaches to ancient temples, bustling cities to
+                        serene landscapes. Every recommendation is carefully selected by our team of travel experts who
+                        have personally explored these locations.</p>
+                    <p>At VoyageVista, we believe that travel is not just about seeing new places; it's about
+                        experiencing life from different perspectives, creating lasting memories, and returning home
+                        with stories that inspire others to explore.</p>
+                </div>
+            </div>
+
+            <div class="team-section">
+                <h2>Meet Our Team</h2>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <h3>Alex Z.</h3>
+                        <p class="role">CEO & Founder</p>
+                        <p>Passionate traveler with 20 years of industry experience, leading VoyageVista's vision for
+                            accessible luxury travel.</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h3>Michelle R.</h3>
+                        <p class="role">Head of Operations</p>
+                        <p>Ensures smooth travel experiences for all clients with her exceptional organizational skills
+                            and attention to detail.</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h3>John D.</h3>
+                        <p class="role">Lead Travel Curator</p>
+                        <p>Discovers and vets unique destinations worldwide, bringing hidden gems to our platform.</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h3>Jane D.</h3>
+                        <p class="role">Customer Experience Manager</p>
+                        <p>Dedicated to ensuring every traveler has an exceptional journey from booking to return.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="contactPage">
+            <div class="page-header">
+                <h1>Contact Us</h1>
+                <p>We'd love to hear from you. Let's start planning your next adventure!</p>
+            </div>
+
+            <div class="contact-form-container">
+                <form id="contactForm" onsubmit="handleFormSubmit(event)">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" name="message"
+                            placeholder="Tell us about your travel plans or ask us anything..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div id="searchResults">
+            <div class="results-header">
+                <h2>Search Results</h2>
+            </div>
+            <div class="results-grid" id="resultsContainer"></div>
+        </div>
+    </div>
+
+    <script src="travel_recommendation.js"></script>
+</body>
+
+</html>
